@@ -1,23 +1,56 @@
 import { Text, View } from 'react-native'
-import React, { Component } from 'react'
-import { Button } from 'react-native-paper';
+import React from 'react'
+import { Button, Card, Icon, MD3Colors } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
-export class ScreenHome extends Component {
-  render() {
+export default function ScreenHome() {
+  
+    const rutas = useNavigation();
+
     return (
       <View>
 
-        <Button icon="camera" buttonColor="red"  mode="contained" onPress={() => console.log('Pressed')}>
-          Press me
-        </Button>
+        <Card>
+          <Icon
+            source="lightbulb"
+            color={'#EF3444'}
+            size={70}
+          />
 
-        <Button icon="camera" style={{marginTop: 20}} mode="outlined" onPress={() => console.log('Pressed')}>
-          Press me
-        </Button>
+          <Button icon="arrow" dark={false} buttonColor="orange"  mode="text" onPress={() => rutas.push('lucescasa') }>
+            Go to About
+          </Button>
+
+        </Card>
+
+        <Card>
+          <Icon
+            source="door"
+            color={'#EF3444'}
+            size={70}
+          />
+
+          <Button icon="camera" dark={false} mode="contained-tonal" onPress={() => rutas.push('puertacasa') }>
+            Press me
+          </Button>
+
+        </Card>
+
+        <Card>
+          <Icon
+            source="door"
+            color={'#EF4444'}
+            size={70}
+          />
+
+          <Button icon="camera" textColor='red' mode="outlined" onPress={() => rutas.push('detalleshome')}>
+            Press me
+          </Button>
+
+        </Card>
 
       </View>
     )
-  }
+  
 }
 
-export default ScreenHome
