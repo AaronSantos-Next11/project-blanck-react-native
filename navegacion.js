@@ -6,6 +6,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+//Lamar componentes de inicio de sesipon y crear cuenta
+import login from "./screen/login/login";
+import signup from "./screen/login/signup";
+
 // Llamar los screen principales
 import ScreenAcercade from './screen/acercade/ScreenAcercade';
 import ScreenHome from './screen/home/ScreenHome';
@@ -16,6 +20,16 @@ import LucesCasa from "./screen/home/LucesCasa";
 import PuertaCasa from "./screen/home/PuertaCasa";
 import DetallesHome from "./screen/home/DetallesHome";
 
+function AccessApp() {
+   return(
+      <Stack.Navigator>
+         <Stack.Screen name="login" component={login} />
+         <Stack.Screen name="signup" component={signup} />
+         <Stack.Screen name="menu" component={ScreenHome} />
+
+      </Stack.Navigator>
+   )
+}
 
 function MyStackHome() {
    return(
@@ -25,8 +39,6 @@ function MyStackHome() {
          <Stack.Screen name="lucescasa" component={LucesCasa} />
          <Stack.Screen name="puertacasa" component={PuertaCasa} />
          <Stack.Screen name="detalleshome" component={DetallesHome} />
-
-
 
       </Stack.Navigator>
    )
@@ -90,7 +102,7 @@ function MyTabs() {
 
 export default function navigation() {
    return(
-      <MyTabs/>
+      <AccessApp/>
 
    )
 }
