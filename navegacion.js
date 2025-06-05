@@ -1,20 +1,44 @@
 import React from "react";
 import { FontAwesome } from '@expo/vector-icons'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 // Llamar los screen principales
 import ScreenAcercade from './screen/acercade/ScreenAcercade';
 import ScreenHome from './screen/home/ScreenHome';
 import ScreenSetting from './screen/setting/ScreenSetting';
 
+// Llamar los Screen hijos home
+import LucesCasa from "./screen/home/LucesCasa";
+import PuertaCasa from "./screen/home/PuertaCasa";
+import DetallesHome from "./screen/home/DetallesHome";
+
+
+function MyStackHome() {
+   return(
+      <Stack.Navigator>
+
+         <Stack.Screen name="menu" component={ScreenHome} />
+         <Stack.Screen name="lucescasa" component={LucesCasa} />
+         <Stack.Screen name="puertacasa" component={PuertaCasa} />
+         <Stack.Screen name="detalleshome" component={DetallesHome} />
+
+
+
+      </Stack.Navigator>
+   )
+}
+
+
 function MyTabs() {
    return (
       <Tab.Navigator>
          <Tab.Screen
             name="Home" 
-            component={ScreenHome} 
+            component={MyStackHome} 
             options={{
                title: 'menu',
                headerShown:false,
@@ -67,5 +91,6 @@ function MyTabs() {
 export default function navigation() {
    return(
       <MyTabs/>
+
    )
 }
