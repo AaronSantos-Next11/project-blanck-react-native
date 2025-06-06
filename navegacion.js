@@ -2,9 +2,11 @@ import React from "react";
 import { FontAwesome } from '@expo/vector-icons'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 //Lamar componentes de inicio de sesipon y crear cuenta
 import login from "./screen/login/login";
@@ -35,12 +37,47 @@ function MyStackHome() {
    return(
       <Stack.Navigator>
 
-         <Stack.Screen name="menu" component={ScreenHome} />
+         <Stack.Screen name="menu" component={ScreenHome} options={{headerShown:false,}}/>
          <Stack.Screen name="lucescasa" component={LucesCasa} />
          <Stack.Screen name="puertacasa" component={PuertaCasa} />
          <Stack.Screen name="detalleshome" component={DetallesHome} />
 
       </Stack.Navigator>
+   )
+}
+
+
+function MyDrawer() {
+   return(
+      <Drawer.Navigator>
+         <Drawer.Screen name="dash" component={MyStackHome} 
+            options={{
+               title: 'Dashboard',
+               drawerIcon: ({color, size}) => <FontAwesome size={28} name='home' color={color}/>
+            }}
+         />
+
+         <Drawer.Screen name="notificacion" component={MyStackHome} 
+            options={{
+               title: 'Notificacion',
+               drawerIcon: ({color, size}) => <FontAwesome size={28} name='home' color={color}/>
+            }}
+         />
+
+         <Drawer.Screen name="perfil" component={MyStackHome} 
+            options={{
+               title: 'Perfil',
+               drawerIcon: ({color, size}) => <FontAwesome size={28} name='home' color={color}/>
+            }}
+         />
+
+         <Drawer.Screen name="settings" component={MyStackHome} 
+            options={{
+               title: 'Settings',
+               drawerIcon: ({color, size}) => <FontAwesome size={28} name='home' color={color}/>
+            }}
+         />
+      </Drawer.Navigator>
    )
 }
 
@@ -102,7 +139,7 @@ function MyTabs() {
 
 export default function navigation() {
    return(
-      <AccessApp/>
+      <MyDrawer/>
 
    )
 }
