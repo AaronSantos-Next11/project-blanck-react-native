@@ -139,7 +139,6 @@ function MyTabs() {
 
 export default function navigation() {
    return(
-      <MyDrawer/>
-
+      <AccessApp/>
    )
 }

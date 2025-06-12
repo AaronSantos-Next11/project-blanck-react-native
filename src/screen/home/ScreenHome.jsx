@@ -8,6 +8,7 @@ export default function ScreenHome() {
   
     const rutas = useNavigation();
 
+    // Desestructuración de las funciones
     const {sumar, restar, contador, msg} = useContext(estadoGlobal);
 
     console.log(contador);
