@@ -1,11 +1,16 @@
 import { Text, View } from 'react-native'
-import React from 'react'
+import React, {useContext} from 'react'
 import { Button, Card, Icon, MD3Colors } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import {estadoGlobal} from '../../context/contextData'
 
 export default function ScreenHome() {
   
     const rutas = useNavigation();
+
+    const {sumar, restar, contador, msg} = useContext(estadoGlobal);
+
+    console.log(contador);
 
     return (
       <View>
@@ -17,7 +22,7 @@ export default function ScreenHome() {
             size={70}
           />
 
-          <Button icon="arrow" dark={false} buttonColor="orange"  mode="text" onPress={() => rutas.push('lucescasa') }>
+          <Button icon="arrow-right-thin" dark={false} buttonColor="orange"  mode="text" onPress={() => rutas.push('lucescasa') }>
             Go to About
           </Button>
 
@@ -48,6 +53,11 @@ export default function ScreenHome() {
           </Button>
 
         </Card>
+        <Card style={{ padding: 20 }}>
+        <Text> Suma total: {contador}</Text>
+        <Button onPress={()=>sumar()}>Sumar</Button>
+        <Button onPress={()=>restar()}>Restar</Button>
+      </Card>
 
       </View>
     )

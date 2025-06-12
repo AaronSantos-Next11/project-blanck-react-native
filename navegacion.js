@@ -9,18 +9,18 @@ const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 //Lamar componentes de inicio de sesipon y crear cuenta
-import login from "./screen/login/login";
-import signup from "./screen/login/signup";
+import login from "./src/screen/login/login";
+import signup from "./src/screen/login/signup";
 
 // Llamar los screen principales
-import ScreenAcercade from './screen/acercade/ScreenAcercade';
-import ScreenHome from './screen/home/ScreenHome';
-import ScreenSetting from './screen/setting/ScreenSetting';
+import ScreenAcercade from './src/screen/acercade/ScreenAcercade';
+import ScreenHome from './src/screen/home/ScreenHome';
+import ScreenSetting from './src/screen/setting/ScreenSetting';
 
 // Llamar los Screen hijos home
-import LucesCasa from "./screen/home/LucesCasa";
-import PuertaCasa from "./screen/home/PuertaCasa";
-import DetallesHome from "./screen/home/DetallesHome";
+import LucesCasa from "./src/screen/home/LucesCasa";
+import PuertaCasa from "./src/screen/home/PuertaCasa";
+import DetallesHome from "./src/screen/home/DetallesHome";
 
 function AccessApp() {
    return(
