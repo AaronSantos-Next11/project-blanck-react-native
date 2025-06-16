@@ -3,6 +3,7 @@ import React, {useContext} from 'react'
 import { Button, Card, Icon, MD3Colors } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import {estadoGlobal} from '../../context/contextData'
+import {estadoLoginGlobal} from '../../context/contextData';
 
 export default function ScreenHome() {
   
@@ -10,6 +11,8 @@ export default function ScreenHome() {
 
     // Desestructuración de las funciones
     const {sumar, restar, contador, msg} = useContext(estadoGlobal);
+
+    const {outLogin} = useContext(estadoLoginGlobal)
 
     console.log(contador);
 
@@ -59,6 +62,10 @@ export default function ScreenHome() {
         <Button onPress={()=>sumar()}>Sumar</Button>
         <Button onPress={()=>restar()}>Restar</Button>
       </Card>
+
+      <Button icon="camera" dark={false} mode="contained-tonal" onPress={() => outLogin()}>
+            Press me
+      </Button>
 
       </View>
     )

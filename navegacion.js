@@ -1,4 +1,7 @@
-import React from "react";
+import React, {useContext} from "react";
+
+import {estadoLoginGlobal} from './src/context/contextData';
+
 import { FontAwesome } from '@expo/vector-icons'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -138,7 +141,15 @@ function MyTabs() {
 }
 
 export default function navigation() {
+
+   const {isLogin} = useContext(estadoLoginGlobal);
+
+   console.log("Estado de login: ", isLogin)
+
    return(
-      <AccessApp/>
+
+      <>
+       {isLogin ? <MyDrawer/> : <AccessApp/>}
+      </>
    )
 }

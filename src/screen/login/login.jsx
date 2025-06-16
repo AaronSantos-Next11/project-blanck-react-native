@@ -13,7 +13,7 @@ export default function login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const {login, outLogin, perfil, isLogin} = useContext(estadoLoginGlobal)
+  const {login} = useContext(estadoLoginGlobal)
 
   return (
     <View>
@@ -54,15 +54,7 @@ export default function login() {
       {/* // Y modifica el botón Login: */}
       <Button dark={false} mode="contained-tonal" 
         style={styles.button} 
-        onPress={() => {
-          if (email.trim() && password.trim()) {
-            login(); // Primero ejecuta la función login del contexto
-            rutas.push('menu'); // Luego navega al menú
-          } else {
-            console.log("Por favor completa todos los campos");
-            // Aquí podrías mostrar un mensaje de error al usuario
-          }
-        }}>
+        onPress={() => login()}>
           Ingresar
       </Button>
 
