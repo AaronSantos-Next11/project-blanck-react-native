@@ -64,7 +64,7 @@ export default function ScreenHome() {
       </Card>
 
       <Button icon="camera" dark={false} mode="contained-tonal" onPress={() => outLogin()}>
-            Press me
+            Salir del Home
       </Button>
 
       </View>
