@@ -12,8 +12,8 @@ const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 //Lamar componentes de inicio de sesipon y crear cuenta
-import login from "./src/screen/login/login";
-import signup from "./src/screen/login/signup";
+import Login from "./src/screen/login/Login";
+import SignUp from "./src/screen/login/SignUp";
 
 // Llamar los screen principales
 import ScreenAcercade from './src/screen/acercade/ScreenAcercade';
@@ -28,8 +28,8 @@ import DetallesHome from "./src/screen/home/DetallesHome";
 function AccessApp() {
    return(
       <Stack.Navigator>
-         <Stack.Screen name="login" component={login} />
-         <Stack.Screen name="signup" component={signup} />
+         <Stack.Screen name="login" component={Login} />
+         <Stack.Screen name="signup" component={SignUp} />
          <Stack.Screen name="menu" component={ScreenHome} />
 
       </Stack.Navigator>

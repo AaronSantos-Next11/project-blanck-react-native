@@ -4,7 +4,7 @@ import { Text, TextInput, Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import {estadoLoginGlobal} from '../../context/contextData';
 
-export default function login() {
+export default function Login() {
 
   const [text, setText] = React.useState('');
   const rutas = useNavigation();
