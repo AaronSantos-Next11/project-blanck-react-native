@@ -16,6 +16,8 @@ export default function Login() {
 
   const {login} = useContext(estadoLoginGlobal);
 
+  const apiURL = process.env.EXPO_PUBLIC_API_URL;
+
   // Mecanismo que conecta el Back-end para validar los datos
   const handlogin = async () => {
     if(email == '' || password == '') {
@@ -41,7 +43,8 @@ export default function Login() {
 
       // Try/catch para validar si sale algo mal y mandar un error
       try {
-        const response = await fetch("http://192.168.30.33:4000/api/usuario/login", requestOptions); //! Para dispositivos móviles reales
+        const response = await fetch(apiURL, requestOptions); //! Para dispositivos móviles reales
+        // const response = await fetch("http://LaIPdeLaCompu:4000/api/usuario/login", requestOptions); //! Para dispositivos móviles reales
         // const response = await fetch("http://localhost:4000/api/usuario/login", requestOptions); //! Para el emulador
         const result = await response.json();
         console.log(result)
