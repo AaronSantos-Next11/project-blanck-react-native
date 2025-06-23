@@ -21,7 +21,7 @@ export default function StateLogin({children}) {
    }
 
    return (
-      <estadoLoginGlobal.Provider value={{perfil,isLogin, login, outLogin}}>
+      <estadoLoginGlobal.Provider value={{isLogin, login, outLogin}}>
          {children}
       </estadoLoginGlobal.Provider>
    )

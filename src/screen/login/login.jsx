@@ -16,7 +16,7 @@ export default function Login() {
 
   const {login} = useContext(estadoLoginGlobal);
 
-  const apiURL = process.env.EXPO_PUBLIC_API_URL;
+  const apiURL = process.env.API_BASE_URL;
 
   // Mecanismo que conecta el Back-end para validar los datos
   const handlogin = async () => {
@@ -116,7 +116,7 @@ export default function Login() {
 
       <Button dark={true} mode="text" 
         textColor="orange" style={styles.button} 
-        onPress={() => rutas.push('signup') }>
+        onPress={() => rutas.push("signup") }>
           ¿No tienes cuenta? Añadela
       </Button>
 
