@@ -1,14 +1,12 @@
-import { Text, View } from 'react-native'
-import React, { Component } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
 
-export class MiPerfil extends Component {
-  render() {
-    return (
-      <View>
-        <Text>MiPerfil</Text>
-      </View>
-    )
-  }
+export default function MiPerfil() {
+  return (
+    <View>
+      <Text>MiPerfil</Text>
+    </View>
+  )
 }
 
-export default MiPerfil
+const styles = StyleSheet.create({})

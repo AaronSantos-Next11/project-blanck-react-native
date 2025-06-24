@@ -1,14 +1,12 @@
-import { Text, View } from 'react-native'
-import React, { Component } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
 
-export class ScreenAcercade extends Component {
-  render() {
-    return (
-      <View>
-        <Text>ScreenAcercade</Text>
-      </View>
-    )
-  }
+export default function ScreenAcercade() {
+  return (
+    <View>
+      <Text>ScreenAcercade</Text>
+    </View>
+  )
 }
 
-export default ScreenAcercade
+const styles = StyleSheet.create({})
