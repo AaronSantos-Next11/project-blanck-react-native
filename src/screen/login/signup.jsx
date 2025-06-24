@@ -14,7 +14,7 @@ export default function SignUp() {
     const rutas = useNavigation();
 
     //* Constante de la variable de entorno de la URL del servidor
-    const apiURL = process.env.EXPO_PUBLIC_API_URL;
+    const apiURL = process.env.EXPO_PUBLIC_API_URL; //! No funciona, ya sea por el nombre de la variable o no sé
 
     //* Desestructuración de la función estadoLoginGlobal
     const { login } = useContext(estadoLoginGlobal);
@@ -46,7 +46,15 @@ export default function SignUp() {
         };
 
         try {
-            const response = await fetch(apiURL, requestOptions);
+            //! Funciona en casa, pero para celulares
+            const response = await fetch("http://192.168.1.45:4000/api/usuario/agregar", requestOptions);
+
+            //! Funciona en la uni, pero para celulares
+            // const response = await fetch("http://192.168.30.33:4000/api/usuario/agregar", requestOptions);
+
+            //! Funciona, pero en el navegador
+            // const response = await fetch(`${apiURL}/api/usuario/agregar`, requestOptions);
+
             const result = await response.json();
 
             if (result.body?.status === true) {
@@ -66,8 +74,8 @@ export default function SignUp() {
     }
 
     return (
-        <View style={{ padding: 10, flex: 1, justifyContent: "center" }}>
-            <Text style={{ textAlign: "center" }} variant="displayLarge">
+        <View style={{ padding: 20, justifyContent: "center" }}>
+            <Text style={{ textAlign: "center", marginTop: 40, color: 'purple', }} variant="displaySmall">
                 Crear Cuenta
             </Text>
 
