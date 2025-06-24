@@ -40,9 +40,9 @@ function MyStackHome() {
    return(
       <Stack.Navigator>
 
-         <Stack.Screen name="menu" component={ScreenHome} options={{headerShown:false,}}/>
-         <Stack.Screen name="lucescasa" component={LucesCasa} />
-         <Stack.Screen name="puertacasa" component={PuertaCasa} />
+         <Stack.Screen name="menu" component={ScreenHome} options={{headerShown:true, headerTitleAlign:'center'}}/>
+         <Stack.Screen name="lucescasa" component={LucesCasa} options={{headerShown:false}} />
+         <Stack.Screen name="puertacasa" component={PuertaCasa} options={{headerShown:false}} />
          <Stack.Screen name="detalleshome" component={DetallesHome} />
 
       </Stack.Navigator>
@@ -149,7 +149,11 @@ export default function navigation() {
    return(
 
       <>
-       {isLogin ? <MyDrawer/> : <AccessApp/>}
+       {isLogin ? <MyTabs/> : <AccessApp/>}
+
+       {/* {isLogin ? <MyDrawer/> : <AccessApp/>} */} {/*<- Este era el principal */}
+       {/* <MyTabs/> */}
+       {/* <MyStackHome/> */}
       </>
    )
 }
