@@ -149,11 +149,17 @@ export default function navigation() {
    return(
 
       <>
-       {isLogin ? <MyTabs/> : <AccessApp/>}
+         {isLogin ? <MyTabs/> : <AccessApp/>}
 
-       {/* {isLogin ? <MyDrawer/> : <AccessApp/>} */} {/*<- Este era el principal */}
-       {/* <MyTabs/> */}
-       {/* <MyStackHome/> */}
+         {
+            /* 
+               *Este era el condicional principal: 
+               {isLogin ? <MyDrawer/> : <AccessApp/>}
+            */
+         }
+         
+         {/* <MyTabs/> */}
+         {/* <MyStackHome/> */}
       </>
    )
 }
