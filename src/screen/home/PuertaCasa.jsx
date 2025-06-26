@@ -17,7 +17,7 @@ export default function PuertaCasa() {
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
   // URL base de la API
-  const API_BASE_URL = 'http://192.168.1.45:4000/api/puertas'; //! CAMBIA LA IP, dependiendo de la zona wifi, no aplica LOCALHOST
+  const API_BASE_URL = 'http://172.168.14.190:4000/api/puertas'; //! CAMBIA LA IP, dependiendo de la zona wifi, no aplica LOCALHOST
 
   // Función para obtener las puertas
   const obtenerPuertas = async () => {
@@ -53,39 +53,40 @@ export default function PuertaCasa() {
   };
 
   // Función para actualizar el status de una puerta
-  const actualizarStatusPuerta = async (nombrePuerta, nuevoStatus) => {
-    setUpdatingDoor(nombrePuerta);
+  const actualizarStatusPuerta = async (id, nuevoStatus) => {
+    setUpdatingDoor(id);
     
     try {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
       const raw = JSON.stringify({
-        "nombre_puerta": nombrePuerta,
+        "id": id,
         "status": nuevoStatus
       });
 
       const requestOptions = {
-        method: "PATCH",
+        method: "POST",
         headers: myHeaders,
         body: raw,
         redirect: "follow"
       };
 
-      const response = await fetch(`${API_BASE_URL}/actualizar_status`, requestOptions);
+      const response = await fetch(`${API_BASE_URL}/actualizar`, requestOptions);
       const result = await response.json();
 
       if (response.ok && result.status !== false) {
         // Actualizar el estado local
         setPuertas(prevPuertas => 
           prevPuertas.map(puerta => 
-            puerta.nombre_puerta === nombrePuerta 
+            puerta.id === id 
               ? { ...puerta, status: nuevoStatus }
               : puerta
           )
         );
         
-        mostrarSnackbar(`${nombrePuerta} ${nuevoStatus ? 'abierta' : 'cerrada'}`);
+        const puertaActualizada = puertas.find(puerta => puerta.id === id);
+        mostrarSnackbar(`${puertaActualizada?.nombre_puerta || 'Puerta'} ${nuevoStatus ? 'abierta' : 'cerrada'}`);
       } else {
         throw new Error(result.mensaje || 'Error al actualizar la puerta');
       }
@@ -102,12 +103,12 @@ export default function PuertaCasa() {
   };
 
   // Función para manejar el cambio de switch
-  const handleSwitchChange = (nombrePuerta, currentStatus) => {
-    const nuevoStatus = currentStatus === 1 || currentStatus === true ? false : true;
+  const handleSwitchChange = (puerta) => {
+    const nuevoStatus = puerta.status === 1 || puerta.status === true ? false : true;
     
     Alert.alert(
       'Confirmar acción',
-      `¿Deseas ${nuevoStatus ? 'abrir' : 'cerrar'} ${nombrePuerta}?`,
+      `¿Deseas ${nuevoStatus ? 'abrir' : 'cerrar'} ${puerta.nombre_puerta}?`,
       [
         {
           text: 'Cancelar',
@@ -115,7 +116,7 @@ export default function PuertaCasa() {
         },
         {
           text: 'Confirmar',
-          onPress: () => actualizarStatusPuerta(nombrePuerta, nuevoStatus),
+          onPress: () => actualizarStatusPuerta(puerta.id, nuevoStatus),
         },
       ]
     );
@@ -184,13 +185,13 @@ export default function PuertaCasa() {
         <View style={styles.switchContainer}>
           <Switch
             value={getSwitchValue(puerta.status)}
-            onValueChange={() => handleSwitchChange(puerta.nombre_puerta, puerta.status)}
-            disabled={updatingDoor === puerta.nombre_puerta}
+            onValueChange={() => handleSwitchChange(puerta)}
+            disabled={updatingDoor === puerta.id}
             thumbColor={getSwitchValue(puerta.status) ? '#4CAF50' : '#f4f3f4'}
             trackColor={{ false: '#767577', true: '#C8E6C9' }}
           />
           
-          {updatingDoor === puerta.nombre_puerta && (
+          {updatingDoor === puerta.id && (
             <ActivityIndicator 
               size="small" 
               color="#8B5CF6" 

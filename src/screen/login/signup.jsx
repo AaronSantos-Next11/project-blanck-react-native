@@ -4,6 +4,9 @@ import { Text, Button, TextInput } from 'react-native-paper'
 import { useNavigation } from "@react-navigation/native"
 import { estadoLoginGlobal } from '../../context/contextData'
 
+// Llama el objeto que contiene el acceso a las variables de entorno y endpoints
+import { API_CONFIG, getCommonHeaders } from '../../config/apiConfig';
+
 export default function SignUp() {
 
     //* Estados para la interfaz
@@ -14,7 +17,7 @@ export default function SignUp() {
     const rutas = useNavigation();
 
     //* Constante de la variable de entorno de la URL del servidor
-    const apiURL = process.env.EXPO_PUBLIC_API_URL; //! No funciona, ya sea por el nombre de la variable o no sé
+    // const apiURL = process.env.EXPO_PUBLIC_API_URL; //! No funciona, ya sea por el nombre de la variable o no sé
 
     //* Desestructuración de la función estadoLoginGlobal
     const { login } = useContext(estadoLoginGlobal);
@@ -28,7 +31,9 @@ export default function SignUp() {
         }
         
         const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
+        Object.entries(getCommonHeaders()).forEach(([key, value]) => {
+            myHeaders.append(key, value);
+        });
 
         const raw = JSON.stringify({
             "id": 0,
@@ -46,8 +51,10 @@ export default function SignUp() {
         };
 
         try {
+            const response = await fetch(API_CONFIG.USUARIO.AGREGAR, requestOptions);
+
             //! Funciona en casa, pero para celulares
-            const response = await fetch("http://192.168.1.45:4000/api/usuario/agregar", requestOptions);
+            // const response = await fetch("http://192.168.1.45:4000/api/usuario/agregar", requestOptions);
 
             //! Funciona en la uni, pero para celulares
             // const response = await fetch("http://192.168.30.33:4000/api/usuario/agregar", requestOptions);

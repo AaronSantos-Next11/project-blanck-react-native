@@ -4,6 +4,10 @@ import { Text, TextInput, Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import {estadoLoginGlobal} from '../../context/contextData';
 
+// Llama el objeto que contiene el acceso a las variables de entorno y endpoints
+import { API_CONFIG, getCommonHeaders } from '../../config/apiConfig'; 
+
+
 export default function Login() {
 
   const [text, setText] = React.useState('');
@@ -16,7 +20,7 @@ export default function Login() {
 
   const {login} = useContext(estadoLoginGlobal);
 
-  const apiURL = process.env.EXPO_PUBLIC_API_URL;
+  // const apiURL = process.env.EXPO_PUBLIC_API_URL;
 
   // Mecanismo que conecta el Back-end para validar los datos
   const handlogin = async () => {
@@ -43,7 +47,7 @@ export default function Login() {
 
       // Try/catch para validar si sale algo mal y mandar un error
       try {
-        const response = await fetch(apiURL, requestOptions); //! Para dispositivos móviles reales
+        const response = await fetch(API_CONFIG.USUARIO.LOGIN, requestOptions); //! Para dispositivos móviles reales
         // const response = await fetch(`${apiURL}/api/usuario/login`, requestOptions); //? No funciona para el navegador
         // const response = await fetch("http://192.168.1.45:4000/api/usuario/login", requestOptions); //! Para dispositivos móviles reales
         // const response = await fetch("http://localhost:4000/api/usuario/login", requestOptions); //! Para el navegador

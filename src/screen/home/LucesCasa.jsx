@@ -4,6 +4,9 @@ import { Card, Switch, Button, ActivityIndicator, Snackbar, Appbar } from 'react
 import { useNavigation } from '@react-navigation/native';
 import { estadoGlobal } from '../../context/contextData';
 
+// Llama el objeto que contiene el acceso a las variables de entorno y endpoints
+import { API_CONFIG, getCommonHeaders } from '../../config/apiConfig';
+
 export default function LucesCasa() {
   const navigation = useNavigation();
   const { msg } = useContext(estadoGlobal) || {};
@@ -17,7 +20,7 @@ export default function LucesCasa() {
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
   // URL base de la API
-  const API_BASE_URL = 'http://192.168.1.45:4000/api/luces'; //! CAMBIA LA IP, dependiendo de la zona wifi, no aplica LOCALHOST
+  // const API_BASE_URL = 'http://192.168.1.45:4000/api/luces'; //! CAMBIA LA IP, dependiendo de la zona wifi, no aplica LOCALHOST
 
   // Función para obtener las luces
   const obtenerLuces = async () => {
@@ -27,8 +30,9 @@ export default function LucesCasa() {
         redirect: "follow"
       };
 
-      const response = await fetch(`${API_BASE_URL}/`, requestOptions);
-      
+      const response = await fetch(API_CONFIG.LUCES.GET_ALL, requestOptions);
+      // const response = await fetch(`${API_BASE_URL}/`, requestOptions);
+
       if (!response.ok) {
         throw new Error(`Error HTTP: ${response.status}`);
       }
@@ -53,39 +57,42 @@ export default function LucesCasa() {
   };
 
   // Función para actualizar el status de una luz
-  const actualizarStatusLuz = async (nombreDispositivo, nuevoStatus) => {
-    setUpdatingDevice(nombreDispositivo);
+  const actualizarStatusLuz = async (id, nuevoStatus) => {
+    setUpdatingDevice(id);
     
     try {
       const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
+      Object.entries(getCommonHeaders()).forEach(([key, value]) => {
+        myHeaders.append(key, value);
+      });
 
       const raw = JSON.stringify({
-        "nombre_dispositivo": nombreDispositivo,
+        "id": id,
         "status": nuevoStatus
       });
 
       const requestOptions = {
-        method: "PATCH",
+        method: "POST",
         headers: myHeaders,
         body: raw,
         redirect: "follow"
       };
 
-      const response = await fetch(`${API_BASE_URL}/actualizar_status`, requestOptions);
+      const response = await fetch(API_CONFIG.LUCES.UPDATE_STATUS, requestOptions);
       const result = await response.json();
 
       if (response.ok && result.status !== false) {
         // Actualizar el estado local
         setLuces(prevLuces => 
           prevLuces.map(luz => 
-            luz.nombre_dispositivo === nombreDispositivo 
+            luz.id === id 
               ? { ...luz, status: nuevoStatus }
               : luz
           )
         );
         
-        mostrarSnackbar(`${nombreDispositivo} ${nuevoStatus ? 'encendida' : 'apagada'}`);
+        const luzActualizada = luces.find(luz => luz.id === id);
+        mostrarSnackbar(`${luzActualizada?.nombre_dispositivo || 'Dispositivo'} ${nuevoStatus ? 'encendida' : 'apagada'}`);
       } else {
         throw new Error(result.mensaje || 'Error al actualizar el dispositivo');
       }
@@ -102,12 +109,12 @@ export default function LucesCasa() {
   };
 
   // Función para manejar el cambio de switch
-  const handleSwitchChange = (nombreDispositivo, currentStatus) => {
-    const nuevoStatus = currentStatus === 1 || currentStatus === true ? false : true;
+  const handleSwitchChange = (luz) => {
+    const nuevoStatus = luz.status === 1 || luz.status === true ? false : true;
     
     Alert.alert(
       'Confirmar acción',
-      `¿Deseas ${nuevoStatus ? 'encender' : 'apagar'} ${nombreDispositivo}?`,
+      `¿Deseas ${nuevoStatus ? 'encender' : 'apagar'} ${luz.nombre_dispositivo}?`,
       [
         {
           text: 'Cancelar',
@@ -115,7 +122,7 @@ export default function LucesCasa() {
         },
         {
           text: 'Confirmar',
-          onPress: () => actualizarStatusLuz(nombreDispositivo, nuevoStatus),
+          onPress: () => actualizarStatusLuz(luz.id, nuevoStatus),
         },
       ]
     );
@@ -171,13 +178,13 @@ export default function LucesCasa() {
         <View style={styles.switchContainer}>
           <Switch
             value={getSwitchValue(luz.status)}
-            onValueChange={() => handleSwitchChange(luz.nombre_dispositivo, luz.status)}
-            disabled={updatingDevice === luz.nombre_dispositivo}
+            onValueChange={() => handleSwitchChange(luz)}
+            disabled={updatingDevice === luz.id}
             thumbColor={getSwitchValue(luz.status) ? '#FFD700' : '#f4f3f4'}
             trackColor={{ false: '#767577', true: '#FFE082' }}
           />
           
-          {updatingDevice === luz.nombre_dispositivo && (
+          {updatingDevice === luz.id && (
             <ActivityIndicator 
               size="small" 
               color="#8B5CF6" 
